@@ -159,7 +159,7 @@ class AppScaffold extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
                         const Text(
-                          'ProjectFlow AI',
+                          'EasyTrack',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -233,7 +233,7 @@ class AppScaffold extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                   icon: const Icon(Icons.auto_awesome, size: 16),
-                  label: const Text('AI Assistant', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  label: const Text('EasyTrack AI Assistant', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                 ),
                 const SizedBox(width: 14),
 

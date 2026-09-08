@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(width: 12),
                       const Text(
-                        'ProjectFlow AI',
+                        'EasyTrack',
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,

@@ -11,7 +11,7 @@ class ProjectManagerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ProjectFlow AI',
+      title: 'EasyTrack',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
