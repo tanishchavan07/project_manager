@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:mongo_dart/mongo_dart.dart';
+import 'env.dart';
 
 /// Singleton database manager.
 /// Call [Database.connect] once at startup; then use [Database.instance]
@@ -18,8 +18,11 @@ class Database {
   /// Reads the MongoDB connection URI from the MONGO_URI environment variable
   /// and opens a persistent connection.
   static Future<void> connect() async {
-    final uri = Platform.environment['MONGO_URI'] ??
-        'mongodb://localhost:27017/project_management';
+    final uri = AppEnv.get('MONGO_URI');
+    if (uri == null || uri.isEmpty) {
+      throw StateError(
+          '[DB] MONGO_URI is not set. Add it to your .env file.');
+    }
 
     try {
       _db = await Db.create(uri);

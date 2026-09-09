@@ -1,15 +1,15 @@
-import 'dart:io';
 import 'package:bcrypt/bcrypt.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 import '../config/database.dart';
+import '../config/env.dart';
 import '../models/user.dart';
 
 /// Handles user registration, login, and JWT generation.
 class AuthService {
   static String get _jwtSecret =>
-      Platform.environment['JWT_SECRET'] ?? 'default_jwt_secret_change_me';
+      AppEnv.get('JWT_SECRET') ?? 'default_jwt_secret_change_me';
 
   // ---------------------------------------------------------------------------
   // Register  POST /api/auth/register

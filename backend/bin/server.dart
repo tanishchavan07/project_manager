@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dotenv/dotenv.dart';
+import '../lib/config/env.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
@@ -21,12 +21,8 @@ import '../lib/services/task_service.dart';
 // =============================================================================
 
 Future<void> main() async {
-  // Load .env file (ignored if missing — env vars may be set externally)
-  try {
-    DotEnv(includePlatformEnvironment: true)..load();
-  } catch (_) {
-    // .env file not found — rely on system environment variables
-  }
+  // Load .env file once before any service is used.
+  AppEnv.load();
 
   // Connect to MongoDB
   await Database.connect();
@@ -51,7 +47,7 @@ Future<void> main() async {
       .addMiddleware(_errorHandler())
       .addHandler(router.call);
 
-  final port = int.tryParse(Platform.environment['PORT'] ?? '') ?? 8080;
+  final port = int.tryParse(AppEnv.get('PORT') ?? '') ?? 8080;
   final server = await shelf_io.serve(handler, InternetAddress.anyIPv4, port);
 
   print('');

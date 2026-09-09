@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:mongo_dart/mongo_dart.dart';
 
 import '../config/database.dart';
+import '../config/env.dart';
 import '../models/milestone.dart';
 import '../models/task.dart';
 
@@ -23,10 +23,9 @@ bool _isValidObjectId(String id) {
 /// touching the rest of the application.
 class AIService {
   static const String _geminiBaseUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
-  static String get _apiKey =>
-      Platform.environment['GEMINI_API_KEY'] ?? '';
+  static String? get _apiKey => AppEnv.get('GEMINI_API_KEY');
 
   // ---------------------------------------------------------------------------
   // Chat  POST /api/ai/chat
@@ -40,7 +39,7 @@ class AIService {
       return _error(400, 'Message is required.');
     }
 
-    if (_apiKey.isEmpty) {
+    if (_apiKey == null || _apiKey!.isEmpty) {
       return _error(500,
           'AI service is not configured. Please set the GEMINI_API_KEY environment variable.');
     }
@@ -74,7 +73,7 @@ class AIService {
         },
       };
     } catch (e) {
-      return _error(500, 'Failed to get AI response. Please try again later.');
+      return _error(500, 'server issue');
     }
   }
 
@@ -170,7 +169,7 @@ Do not make up data that is not in the context.''';
 
   static Future<String> _callAI(
       String systemPrompt, String userMessage) async {
-    final url = Uri.parse('$_geminiBaseUrl?key=$_apiKey');
+    final url = Uri.parse('$_geminiBaseUrl?key=${_apiKey!}');
 
     final requestBody = {
       'contents': [
