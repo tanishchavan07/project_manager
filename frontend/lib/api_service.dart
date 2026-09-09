@@ -251,7 +251,7 @@ class Comment {
 // =============================================================================
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:8080';
+  static const String baseUrl = 'https://easytrack-backend-rifw.onrender.com';
 
   // In-memory active session
   static String? token;
